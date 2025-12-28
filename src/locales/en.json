@@ -1,0 +1,54 @@
+{
+    "nav": {
+        "home": "Home",
+        "shop": "Shop",
+        "contact": "Contact",
+        "dashboard": "Dashboard",
+        "compare": "Compare"
+    },
+    "hero": {
+        "badge": "New Collection 2024",
+        "title": "Electro-05",
+        "subtitle": "Smart electronics at the best price in Morocco",
+        "desc": "Smartphones, PC, Gaming and certified refurbished products.",
+        "cta_buy": "Buy Now",
+        "cta_catalog": "View Catalog"
+    },
+    "common": {
+        "loading": "Loading...",
+        "error": "An error occurred",
+        "no_data": "No data available",
+        "currency": "DH"
+    },
+    "contact": {
+        "title": "Contact",
+        "subtitle": "Let's Talk",
+        "desc": "Technical question? Specific request? Our team of experts is listening 7 days a week.",
+        "form": {
+            "name": "Full Name",
+            "email": "Email Address",
+            "subject": "Subject",
+            "message": "Your Message",
+            "submit": "Send Message",
+            "placeholder_name": "Ex: John Doe",
+            "placeholder_message": "Tell us how we can help...",
+            "success": "Your message has been sent successfully!"
+        }
+    },
+    "dashboard": {
+        "title": "Dashboard",
+        "subtitle": "Performance overview of your Electro-05 store.",
+        "stats": {
+            "revenue": "Total Revenue",
+            "orders": "Orders",
+            "active_products": "Active Products",
+            "conv_rate": "Conv. Rate"
+        },
+        "sales": {
+            "top_products": "Top Selling Products",
+            "cities": "Most Active Cities",
+            "sales_unit": "sales",
+            "orders_unit": "orders"
+        }
+    }
+}

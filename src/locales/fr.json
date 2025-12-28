@@ -1,0 +1,54 @@
+{
+    "nav": {
+        "home": "Accueil",
+        "shop": "Boutique",
+        "contact": "Contact",
+        "dashboard": "Tableau de Bord",
+        "compare": "Comparer"
+    },
+    "hero": {
+        "badge": "Nouvelle Collection 2024",
+        "title": "Electro-05",
+        "subtitle": "L’électronique intelligente, au meilleur prix au Maroc",
+        "desc": "Smartphones, PC, Gaming et produits reconditionnés certifiés.",
+        "cta_buy": "Acheter Maintenant",
+        "cta_catalog": "Voir le Catalogue"
+    },
+    "common": {
+        "loading": "Chargement...",
+        "error": "Une erreur est survenue",
+        "no_data": "Aucune donnée disponible",
+        "currency": "DH"
+    },
+    "contact": {
+        "title": "Contact",
+        "subtitle": "Parlons Ensemble",
+        "desc": "Une question technique ? Une demande spécifique ? Notre équipe d'experts est à votre écoute 7j/7.",
+        "form": {
+            "name": "Nom complet",
+            "email": "Adresse Email",
+            "subject": "Sujet",
+            "message": "Votre Message",
+            "submit": "Envoyer le message",
+            "placeholder_name": "Ex: Zakaria Chamekh",
+            "placeholder_message": "Dites-nous comment nous pouvons vous aider...",
+            "success": "Votre message a été envoyé avec succès !"
+        }
+    },
+    "dashboard": {
+        "title": "Tableau de Bord",
+        "subtitle": "Aperçu des performances de votre boutique Electro-05.",
+        "stats": {
+            "revenue": "Chiffre d'Affaires",
+            "orders": "Commandes",
+            "active_products": "Produits Actifs",
+            "conv_rate": "Taux de Conv."
+        },
+        "sales": {
+            "top_products": "Top Produits Vendus",
+            "cities": "Villes les plus actives",
+            "sales_unit": "ventes",
+            "orders_unit": "commandes"
+        }
+    }
+}
