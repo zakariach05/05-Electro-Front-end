@@ -1,4 +1,4 @@
-import React, { Suspense, lazy, useState, useEffect } from 'react';
+import React, { Suspense, lazy, useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Loader from './components/atoms/Loader';
 import SplashScreen from './components/atoms/SplashScreen';
@@ -9,7 +9,7 @@ import { AuthProvider } from './context/AuthContext';
 import { WishlistProvider } from './context/WishlistContext';
 import { ThemeProvider } from './context/ThemeContext';
 import CartDrawer from './components/organisms/CartDrawer';
-import MainLayout from './layouts/MainLayout';
+// import MainLayout from './layouts/MainLayout';
 
 import ProtectedRoute from './components/ProtectedRoute';
 import { Toaster } from 'react-hot-toast';

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AdminLayout from '../layouts/AdminLayout';
-import { User, Shield, UserCheck, Search, MoreHorizontal } from 'lucide-react';
+import {Shield, UserCheck, Search, MoreHorizontal } from 'lucide-react';
 import Loader from '../components/atoms/Loader';
 import axios from 'axios';
 import { API_URL } from '../services/api';

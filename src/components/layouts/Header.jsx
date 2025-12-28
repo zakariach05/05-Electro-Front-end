@@ -80,12 +80,10 @@ const Header = () => {
             </div>
         )}
 
-
-
         <header
                 className={`fixed ${
                     showAnnouncement ? 'top-8' : 'top-0'
-                } left-0 w-full  bg-white/100 z-50 transition-all duration-300 ${
+                } left-0 w-full bg-white/95 z-50 transition-all duration-300 ${
                     isScrolled || activeCategory
                         ? 'bg-white/70 dark:bg-gray-900/80 backdrop-blur-5xl shadow-md border-b border-white/20'
                         : 'bg-white/5 backdrop-blur-5xl md:hover:bg-white/80 md:dark:hover:bg-gray-900/80 transition-colors'
