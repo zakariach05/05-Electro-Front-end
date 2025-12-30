@@ -5,9 +5,11 @@ import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { API_URL } from '../services/api';
 import { getImageUrl } from '../services/image';
+import { exportProductsToExcel } from '../utils/excelExport';
 import { Trash2, Plus, Edit, Package, Search } from 'lucide-react';
 import Loader from '../components/atoms/Loader';
 import SEO from '../components/atoms/SEO';
+import { toast } from 'react-hot-toast';
 
 const AdminProducts = () => {
     const navigate = useNavigate();
@@ -19,6 +21,9 @@ const AdminProducts = () => {
     useEffect(() => {
         fetchProducts();
     }, []);
+
+    // Export state for XLSX
+    const [isExporting, setIsExporting] = useState(false);
 
     const fetchProducts = async () => {
         try {
@@ -55,12 +60,33 @@ const AdminProducts = () => {
                             <h1 className="text-3xl font-black text-gray-900">Gestion des Produits</h1>
                             <p className="text-gray-500 font-medium">Ajoutez, modifiez ou supprimez des articles.</p>
                         </div>
-                        <button
-                            onClick={() => navigate('/admin/products/new')}
-                            className="flex items-center gap-2 bg-gray-900 text-white px-6 py-3 rounded-2xl font-bold hover:bg-primary transition-all shadow-xl"
-                        >
-                            <Plus size={20} /> Nouveau Produit
-                        </button>
+                        <div className="flex items-center gap-3">
+                            <button
+                                onClick={async () => {
+                                    setIsExporting(true);
+                                    try {
+                                        await exportProductsToExcel(filteredProducts.length > 0 ? filteredProducts : products);
+                                        toast.success('Export XLSX téléchargé');
+                                    } catch (error) {
+                                        console.error('Erreur export XLSX:', error);
+                                        toast.error('Erreur lors de l\'export');
+                                    } finally {
+                                        setIsExporting(false);
+                                    }
+                                }}
+                                disabled={isExporting}
+                                className={`flex items-center gap-2 ${isExporting ? 'opacity-60 cursor-wait' : 'bg-white text-gray-900'} px-4 py-2 rounded-2xl font-bold border border-gray-200 hover:bg-gray-50 transition-all shadow-sm`}
+                            >
+                                <Package size={18} /> {isExporting ? 'Génération...' : 'Exporter XLSX'}
+                            </button>
+
+                            <button
+                                onClick={() => navigate('/admin/products/new')}
+                                className="flex items-center gap-2 bg-gray-900 text-white px-6 py-3 rounded-2xl font-bold hover:bg-primary transition-all shadow-xl"
+                            >
+                                <Plus size={20} /> Nouveau Produit
+                            </button>
+                        </div>
                     </div>
 
                     <div className="bg-white rounded-[32px] shadow-sm border border-gray-100 overflow-hidden">
@@ -70,7 +96,7 @@ const AdminProducts = () => {
                                 <input
                                     type="text"
                                     placeholder="Rechercher un produit..."
-                                    className="w-full pl-12 pr-4 py-3 bg-gray-50 border-transparent focus:border-primary focus:bg-white border-2 rounded-2xl outline-none transition-all font-medium"
+                                    className="w-full pl-12 pr-4 py-3 bg-gray-50 border-transparent focus:border-primary focus:bg-white border-2 rounded-2xl outline-none transition-all font-medium text-black dark:text-black"
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
                                 />

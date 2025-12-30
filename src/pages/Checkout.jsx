@@ -127,7 +127,7 @@ const Checkout = () => {
 
     return (
         <MainLayout>
-            <div className="bg-[#f8fafc] min-h-screen py-10 lg:py-16">
+            <div className="bg-[#f8fafc] min-h-screen pt-6 pb-10 lg:pt-16 lg:pb-16">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
                     {/* Header Summary */}
@@ -231,7 +231,7 @@ const Checkout = () => {
                                             <div className="p-4 sm:p-6 space-y-4">
                                                 {group.items.map((item) => (
                                                     <div key={item.id} className="flex gap-4 items-center">
-                                                            <div className="w-16 h-16 bg-gray-50 rounded-xl p-1 flex-shrink-0 border border-gray-100">
+                                                        <div className="w-16 h-16 bg-gray-50 rounded-xl p-1 flex-shrink-0 border border-gray-100">
                                                             <img src={getImageUrl(item.image)} alt={item.name} className="w-full h-full object-contain mix-blend-multiply" />
                                                         </div>
                                                         <div className="flex-1">
@@ -278,7 +278,7 @@ const Checkout = () => {
                                                         <div className="flex gap-2 mt-3 grayscale group-hover:grayscale-0 transition-all opacity-60 group-hover:opacity-100">
                                                             <img src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg" alt="Visa" className="h-4" />
                                                             <img src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg" alt="Mastercard" className="h-6" />
-                                                            <img src="https://www.cmi.co.ma/sites/default/files/LOGO_CMI_2023.png" alt="CMI" className="h-5" />
+                                                            <img src={getImageUrl('cmi.png')} alt="CMI" className="h-5" />
                                                         </div>
                                                     </div>
                                                 </div>

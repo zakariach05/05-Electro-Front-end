@@ -12,6 +12,8 @@ import CartDrawer from './components/organisms/CartDrawer';
 // import MainLayout from './layouts/MainLayout';
 
 import ProtectedRoute from './components/ProtectedRoute';
+import BackToTop from './components/atoms/BackToTop';
+import SmartAssistant from './components/organisms/SmartAssistant';
 import { Toaster } from 'react-hot-toast';
 
 // Lazy load pages for extreme performance (Code Splitting)
@@ -97,6 +99,8 @@ function App() {
                 {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
                 <Router>
                   <CartDrawer />
+                  <BackToTop />
+                  <SmartAssistant />
                   <Suspense fallback={<PageLoader />}>
                     <Routes>
                       <Route path="/" element={<Home />} />

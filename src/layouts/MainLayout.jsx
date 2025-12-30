@@ -28,9 +28,12 @@ const MainLayout = ({ children }) => {
     }, [location.pathname]);
 
     return (
-        <div className={`min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col ${language === 'ar' ? 'font-arabic' : 'font-sans'}`} dir={language === 'ar' ? 'rtl' : 'ltr'}>
+        <div className={`min-h-screen bg-gray-50 dark:bg-slate-900 text-gray-900 dark:text-sky-100 flex flex-col ${language === 'ar' ? 'font-arabic' : 'font-sans'}`} dir={language === 'ar' ? 'rtl' : 'ltr'}>
             <Header />
-            <main className={`flex-grow pt-16 transition-opacity duration-500 ease-in-out ${isPageVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
+            <main
+                className={`flex-grow pt-20 md:pt-16 transition-opacity duration-500 ease-in-out ${isPageVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}
+                style={{ scrollPaddingTop: '5rem' }}
+            >
                 {children}
             </main>
             <Footer />

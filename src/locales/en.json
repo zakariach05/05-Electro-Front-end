@@ -51,4 +51,14 @@
             "orders_unit": "orders"
         }
     }
+    ,
+    "home": {
+        "featured": {
+            "label": "Exclusive Selection",
+            "title": "Top Picks Right Now",
+            "assistant": "Assistant",
+            "assistant_label": "Open assistant",
+            "view_all": "View all products"
+        }
+    }
 }

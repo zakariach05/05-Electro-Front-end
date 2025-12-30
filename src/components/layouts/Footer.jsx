@@ -1,11 +1,11 @@
 import React from 'react';
-import { Facebook, Instagram, Twitter, Youtube, Mail, MapPin, Phone, ArrowUp } from 'lucide-react';
+import { Facebook, Instagram, Twitter, Youtube, Mail, MapPin, Phone } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useLanguage } from '../../context/LanguageContext';
+import { getImageUrl } from '../../services/image';
 
 const Footer = () => {
-    const scrollToTop = () => {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    };
+    const { t } = useLanguage();
 
     return (
         <footer className="bg-[#111827] text-white pt-20 pb-10 relative overflow-hidden">
@@ -18,14 +18,26 @@ const Footer = () => {
                     {/* Brand Column */}
                     <div className="lg:col-span-4 space-y-6">
                         <Link to="/" className="inline-flex items-center gap-2 group">
-                            <img src="/Logo.png" alt="Electro-05" className="h-10 w-auto object-contain dark:invert brightness-200 animate-logo-text" />
+                            <img
+                                src="/Logo.png"
+                                alt={t('hero.title')}
+                                className="h-8 md:h-10 lg:h-12 w-auto"
+                                onError={(e) => {
+                                    e.target.style.display = 'none';
+                                    const txt = e.target.nextSibling;
+                                    if (txt) txt.style.display = 'inline-block';
+                                }}
+                            />
+                            <span className="ml-2 font-bold text-white hidden" aria-hidden>
+                                5 Electro
+                            </span>
                         </Link>
                         <p className="text-gray-400 leading-relaxed text-sm">
-                            Votre destination numéro un pour la technologie de pointe au Maroc. Nous proposons une sélection rigoureuse des meilleurs produits mondiaux, livrés chez vous avec soin.
+                            {t('hero.desc')}
                         </p>
                         <div className="flex gap-4 pt-2">
                             {[Facebook, Instagram, Twitter, Youtube].map((Icon, idx) => (
-                                <a key={idx} href="#" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-premium-gradient hover:text-white transition-all duration-300 hover:-translate-y-1">
+                                <a key={idx} href="h" className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-premium-gradient hover:text-white transition-all duration-300 hover:-translate-y-1">
                                     <Icon size={18} />
                                 </a>
                             ))}
@@ -81,14 +93,30 @@ const Footer = () => {
                 </div>
 
                 {/* Newsletter & Copyright */}
-                <div className="flex flex-col md:flex-row justify-between items-center gap-6">
+                <div className="flex flex-col items-center gap-6">
+                    <div className="flex items-center gap-4">
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/5/5e/Visa_Inc._logo.svg"
+                            alt="Visa"
+                            className="h-6 md:h-8 w-auto object-contain bg-white rounded-md p-1"
+                        />
+                        <img
+                            src="https://upload.wikimedia.org/wikipedia/commons/2/2a/Mastercard-logo.svg"
+                            alt="Mastercard"
+                            className="h-6 md:h-8 w-auto object-contain bg-white rounded-md p-1"
+                        />
+                        <img
+                            src={getImageUrl('cmi.png')}
+                            alt="CMI Paiement"
+                            className="h-8 md:h-10 w-auto object-contain bg-white rounded-md p-1"
+                        />
+                    </div>
                     <p className="text-gray-500 text-sm">
-                        &copy; 2024 Electro-05. Tous droits réservés.
+                        &copy; 2026 {t('hero.title')}. Tous droits réservés.
                     </p>
                 </div>
             </div>
         </footer>
     );
 };
-
 export default Footer;

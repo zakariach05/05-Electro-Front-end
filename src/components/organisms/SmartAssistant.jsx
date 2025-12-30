@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Bot, Sparkles, X, ChevronRight, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
@@ -53,6 +53,13 @@ const SmartAssistant = () => {
         setAnswers({});
     };
 
+    // allow external components to open the assistant via a custom event
+    useEffect(() => {
+        const handler = () => setIsOpen(true);
+        window.addEventListener('openSmartAssistant', handler);
+        return () => window.removeEventListener('openSmartAssistant', handler);
+    }, []);
+
     // Simple Recommendation Logic (Mock)
     const getRecommendation = () => {
         // Logic based on answers (can be expanded)
@@ -70,7 +77,7 @@ const SmartAssistant = () => {
         return (
             <button
                 onClick={() => setIsOpen(true)}
-                className="fixed bottom-6 right-6 z-50 bg-gray-900 text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center gap-2 group animate-bounce-slow"
+                className="fixed bottom-24 right-6 z-50 bg-gray-900 text-white dark:bg-white dark:text-gray-900 p-4 rounded-full shadow-2xl hover:scale-110 transition-transform flex items-center group animate-bounce-slow"
             >
                 <div className="relative">
                     <Bot size={28} />
@@ -86,10 +93,12 @@ const SmartAssistant = () => {
         );
     }
 
+
+
     const recommendation = getRecommendation();
 
     return (
-        <div className="fixed bottom-6 right-6 z-50 w-full max-w-sm">
+        <div className="fixed bottom-24 right-6 z-50 w-full max-w-sm">
             <div className="bg-white rounded-3xl shadow-2xl border border-gray-100 overflow-hidden animate-slide-up">
                 {/* Header */}
                 <div className="bg-gray-900 p-6 flex justify-between items-center text-white">

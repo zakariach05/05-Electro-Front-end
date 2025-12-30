@@ -61,6 +61,30 @@ export const CATEGORIES = [
         featured: []
     },
     {
+        id: 'tv',
+        name: 'TV & Son',
+        path: '/shop/tv',
+        icon: Home, // Using Home as placeholder or TV if available
+        subcategories: [
+            { name: 'Samsung', path: '/shop/tv/samsung' },
+            { name: 'LG', path: '/shop/tv/lg' },
+            { name: 'Sony', path: '/shop/tv/sony' },
+        ],
+        featured: []
+    },
+    {
+        id: 'tablets',
+        name: 'Tablettes',
+        path: '/shop/tablets',
+        icon: Smartphone, // Using Smartphone as placeholder
+        subcategories: [
+            { name: 'iPad', path: '/shop/tablets/ipad' },
+            { name: 'Samsung Tab', path: '/shop/tablets/samsung' },
+            { name: 'Lenovo', path: '/shop/tablets/lenovo' },
+        ],
+        featured: []
+    },
+    {
         id: 'smart-home',
         name: 'Domotique',
         path: '/shop/smart-home',

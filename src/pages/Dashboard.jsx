@@ -46,18 +46,20 @@ const Dashboard = () => {
     return (
         <AdminLayout>
             <SEO title={t('dashboard.title')} description="Suivez vos performances de vente en temps réel sur Electro-05." />
-            <div className="bg-gray-50 min-h-screen">
-                <div className="max-w-7xl mx-auto">
+            <div className="bg-gray-50 height-full py-6">
+                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     {/* Welcome Section */}
-                    <div className="bg-premium-gradient rounded-[32px] p-8 mb-10 text-white relative overflow-hidden shadow-2xl">
-                        <div className="relative z-10 flex flex-col md:flex-row justify-between items-center gap-6">
-                            <div className="text-center md:text-left">
-                                <h1 className="text-4xl font-black mb-2">Bon retour, Admin !</h1>
-                                <p className="text-white/80 font-medium">Voici le résumé de vos activités pour aujourd'hui.</p>
+                    <div className="bg-premium-gradient rounded-[24px] p-6 md:p-8 mb-6 text-white relative overflow-hidden shadow-2xl">
+                        <div className="relative z-10 flex flex-col md:flex-row items-center gap-4">
+                            <div className="flex-1 text-center md:text-left">
+                                <h1 className="text-3xl md:text-4xl font-extrabold mb-1 leading-tight">Bon retour, Admin !</h1>
+                                <p className="text-white/85 font-medium">Voici le résumé de vos activités pour aujourd'hui.</p>
                             </div>
-                            <Link to="/admin/products" className="bg-white text-gray-900 px-8 py-4 rounded-2xl font-black flex items-center gap-3 hover:bg-secondary hover:text-white transition-all shadow-xl">
-                                <Plus size={20} /> Ajouter un produit
-                            </Link>
+                            <div className="mt-4 md:mt-0 md:ml-6">
+                                <Link to="/admin/products" className="inline-flex items-center gap-3 bg-white text-gray-900 px-5 py-3 rounded-2xl font-bold hover:shadow-lg hover:translate-y-0.5 transition transform">
+                                    <Plus size={18} /> Ajouter un produit
+                                </Link>
+                            </div>
                         </div>
                         {/* Abstract shapes */}
                         <div className="absolute top-0 right-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -mr-20 -mt-20"></div>
@@ -65,7 +67,7 @@ const Dashboard = () => {
                     </div>
 
                     {/* Stats Grid */}
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
                         <StatCard
                             title="Commandes du Jour"
                             value={overview.daily_orders || 0}
@@ -95,9 +97,9 @@ const Dashboard = () => {
                         />
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
+                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
                         {/* Payment Health */}
-                        <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 flex flex-col justify-between">
+                        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100 flex flex-col justify-between">
                             <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
                                 <DollarSign className="text-primary" /> État des Paiements
                             </h2>
@@ -118,11 +120,11 @@ const Dashboard = () => {
                         </div>
 
                         {/* Recent Activity Log */}
-                        <div className="lg:col-span-2 bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+                        <div className="lg:col-span-2 bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                             <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
                                 <History className="text-primary" /> Journal d'Activité
                             </h2>
-                            <div className="space-y-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
+                            <div className="space-y-3 max-h-[420px] overflow-y-auto pr-2 custom-scrollbar">
                                 {stats?.activity?.map((log, idx) => (
                                     <div key={idx} className="flex items-start gap-4 p-4 hover:bg-gray-50 rounded-2xl transition-colors border-b border-gray-50 last:border-0">
                                         <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-primary font-bold">
@@ -144,15 +146,15 @@ const Dashboard = () => {
                         </div>
                     </div>
 
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                         {/* Top Products */}
-                        <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+                        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                             <div className="flex items-center gap-2 mb-6">
                                 <BarChart3 className="text-primary" size={24} />
                                 <h2 className="text-xl font-bold text-gray-900">{t('dashboard.sales.top_products')}</h2>
                             </div>
                             <div className="space-y-4">
-                                {(stats?.top_products || []).length > 0 ? stats.top_products.map((item, idx) => (
+                                {(stats?.top_products || []).length > 0 ? (stats.top_products.slice().sort((a,b)=> (b.total_sold||0) - (a.total_sold||0))).map((item, idx) => (
                                     <div key={idx} className="flex items-center justify-between p-4 rounded-2xl bg-gray-50 hover:bg-gray-100 transition-colors">
                                         <div className="flex items-center gap-4">
                                             <span className="w-8 h-8 flex items-center justify-center bg-gray-900 text-white rounded-lg font-bold text-xs">{idx + 1}</span>
@@ -165,13 +167,13 @@ const Dashboard = () => {
                         </div>
 
                         {/* City Stats */}
-                        <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100">
+                        <div className="bg-white p-6 rounded-2xl shadow-sm border border-gray-100">
                             <div className="flex items-center gap-2 mb-6">
                                 <MapPin className="text-primary" size={24} />
                                 <h2 className="text-xl font-bold text-gray-900">{t('dashboard.sales.cities')}</h2>
                             </div>
                             <div className="space-y-4">
-                                {(stats?.cities || []).length > 0 ? stats.cities.map((city, idx) => (
+                                {(stats?.cities || []).length > 0 ? (stats.cities.slice().sort((a,b)=> (b.count||0) - (a.count||0))).map((city, idx) => (
                                     <div key={idx} className="space-y-2">
                                         <div className="flex justify-between text-sm">
                                             <span className="font-medium text-gray-700">{city.customer_city}</span>
@@ -195,20 +197,20 @@ const Dashboard = () => {
 };
 
 const StatCard = ({ title, value, icon, color, trend }) => (
-    <div className="bg-white p-6 rounded-3xl shadow-sm border border-gray-100 relative overflow-hidden group hover:shadow-lg transition-all">
-        <div className={`w-12 h-12 ${color} rounded-2xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
-            {icon}
-        </div>
-        <div>
-            <p className="text-sm font-medium text-gray-500">{title}</p>
-            <h3 className="text-2xl font-bold text-gray-900 mt-1">{value}</h3>
+    <div className="bg-white p-5 rounded-2xl shadow-sm border border-gray-100 relative overflow-hidden group hover:shadow-lg transition-all">
+        <div className="flex items-center gap-4">
+            <div className={`w-12 h-12 ${color} rounded-xl flex items-center justify-center flex-shrink-0`}>{icon}</div>
+            <div className="flex-1">
+                <p className="text-xs font-semibold text-gray-400 uppercase tracking-widest">{title}</p>
+                <h3 className="text-2xl md:text-3xl font-extrabold text-gray-900 mt-1 leading-tight">{value}</h3>
+            </div>
             {trend && (
-                <span className="inline-flex mt-2 text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded-full">
-                    {trend}
-                </span>
+                <div className="flex-shrink-0 text-right">
+                    <span className="inline-flex mt-0 text-xs font-bold text-green-600 bg-green-50 px-2 py-1 rounded-full">{trend}</span>
+                </div>
             )}
         </div>
-        <div className="absolute -right-4 -bottom-4 opacity-5 group-hover:scale-125 transition-transform duration-700">
+        <div className="absolute -right-4 -bottom-6 opacity-8 transform scale-110 text-gray-200 pointer-events-none">
             {icon}
         </div>
     </div>

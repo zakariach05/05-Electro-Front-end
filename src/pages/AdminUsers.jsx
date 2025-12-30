@@ -37,7 +37,7 @@ const AdminUsers = () => {
                         <input
                             type="text"
                             placeholder="Rechercher un utilisateur..."
-                            className="w-full pl-12 pr-4 py-3 bg-gray-50 border-transparent focus:border-primary focus:bg-white border-2 rounded-2xl outline-none transition-all font-medium"
+                            className="w-full pl-12 pr-4 py-3 bg-gray-50 border-transparent focus:border-primary focus:bg-white border-2 rounded-2xl outline-none transition-all font-medium text-black dark:text-black"
                         />
                     </div>
                 </div>

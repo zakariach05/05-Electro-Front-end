@@ -133,7 +133,7 @@ const ProductDetail = () => {
                         </div>
 
                         {/* Product Info */}
-                        <div className="product-info flex flex-col">
+                        <div className="product-info flex flex-col items-center lg:items-start text-center lg:text-left">
                             <div className="flex-1">
                                 <h1 ref={titleRef} className="text-3xl font-extrabold text-gray-900 sm:text-4xl lg:text-5xl mb-4 leading-tight">
                                     {product.name}
@@ -152,22 +152,24 @@ const ProductDetail = () => {
                                     </div>
                                 </div>
 
-                                <div className="mb-10 p-8 rounded-[40px] bg-gray-900 text-white relative overflow-hidden shadow-2xl">
+                                <div className="mb-10 p-8 rounded-[40px] bg-gray-900 text-white relative overflow-hidden shadow-2xl flex flex-col items-center text-center">
                                     <div className="absolute -right-10 -bottom-10 opacity-10 rotate-12">
                                         <ShieldCheck size={200} />
                                     </div>
                                     <div className="relative z-10">
-                                        <div className="flex items-baseline gap-4 mb-2">
-                                            <span className="text-5xl font-black">{product.price} DH</span>
-                                            {product.promo > 0 && (
-                                                <span className="text-2xl text-gray-500 line-through font-medium">
-                                                    {Math.round(product.price / (1 - product.promo / 100))} DH
-                                                </span>
-                                            )}
-                                        </div>
-                                        <div className="flex items-center gap-2 text-primary font-bold">
-                                            <ShieldCheck size={20} />
-                                            Garantie Premium Electro-05 Incluse
+                                        <div className="flex flex-col items-center gap-2 mb-4">
+                                            <div className="flex items-baseline gap-4">
+                                                <span className="text-5xl font-black">{product.price} DH</span>
+                                                {product.promo > 0 && (
+                                                    <span className="text-2xl text-gray-500 line-through font-medium">
+                                                        {Math.round(product.price / (1 - product.promo / 100))} DH
+                                                    </span>
+                                                )}
+                                            </div>
+                                            <div className="flex items-center gap-2 text-primary font-bold">
+                                                <ShieldCheck size={20} />
+                                                Garantie Premium Electro-05 Incluse
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

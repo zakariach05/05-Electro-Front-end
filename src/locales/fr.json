@@ -51,4 +51,14 @@
             "orders_unit": "commandes"
         }
     }
+    ,
+    "home": {
+        "featured": {
+            "label": "Sélection Exclusive",
+            "title": "Les Pépites du Moment",
+            "assistant": "Assistant",
+            "assistant_label": "Ouvrir l'assistant",
+            "view_all": "Voir tous les produits"
+        }
+    }
 }

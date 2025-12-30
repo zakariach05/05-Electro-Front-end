@@ -2,42 +2,46 @@ import React, { useEffect, useState } from 'react';
 import { ArrowUp } from 'lucide-react';
 
 const BackToTop = () => {
-    const [visible, setVisible] = useState(true);
-    const [mounted, setMounted] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
 
-    const scrollToHero = () => {
-        const hero = document.getElementById('hero');
-        if (hero) {
-            hero.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        } else {
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+    const scrollToTop = () => {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     };
 
     useEffect(() => {
-        const onScroll = () => {
-            setVisible(window.scrollY > 120 || window.innerWidth < 1024);
+        const toggleVisibility = () => {
+            // Lower threshold to ensure it works for testing
+            if (window.scrollY > 100) {
+                setIsVisible(true);
+            } else {
+                setIsVisible(false);
+            }
         };
-        window.addEventListener('scroll', onScroll);
-        onScroll();
-        // small delay to trigger entrance animation
-        const t = setTimeout(() => setMounted(true), 60);
-        return () => {
-            window.removeEventListener('scroll', onScroll);
-            clearTimeout(t);
-        };
-    }, []);
 
-    if (!visible) return null;
+        window.addEventListener('scroll', toggleVisibility);
+        return () => window.removeEventListener('scroll', toggleVisibility);
+    }, []);
 
     return (
         <button
-            onClick={scrollToHero}
-            aria-label="Retour au sommet"
-            className={`fixed right-6 bottom-6 z-50 inline-flex items-center gap-3 px-4 py-3 bg-premium-gradient text-white rounded-full font-black transform transition-all duration-200 active:scale-95 ${mounted ? 'back-to-top-enter back-to-top-pulse' : 'opacity-0 translate-y-6'}`}
+            onClick={scrollToTop}
+            aria-label="Retour en haut"
+            className={`
+                fixed bottom-8 left-8 z-[999] p-4 
+                bg-gray-900 text-secondary dark:bg-white dark:text-primary
+                rounded-full shadow-2xl
+                transform transition-all duration-500 ease-in-out
+                hover:shadow-xl hover:scale-110 hover:-translate-y-1
+                focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-900 dark:focus:ring-white
+                ${isVisible
+                    ? 'opacity-100 translate-y-0'
+                    : 'opacity-0 translate-y-10 pointer-events-none'}
+            `}
         >
-            <span className="hidden sm:inline">Retour au sommet</span>
-            <ArrowUp className="w-5 h-5" />
+            <ArrowUp className="w-7 h-7" />
         </button>
     );
 };

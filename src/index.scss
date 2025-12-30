@@ -15,8 +15,8 @@ body {
     transition: background-color 0.3s ease;
 
     .dark & {
-        background-color: #111827;
-        color: #f9fafb;
+        background-color: #0f172a; // Deep Slate Dark
+        color: #e0f2fe; // Light Blue Text (Cool Contrast)
     }
 }
 
@@ -42,7 +42,7 @@ body {
     border-radius: 4px;
 
     .dark & {
-        background: #4b5563;
+        background: #334155;
     }
 
     &:hover {

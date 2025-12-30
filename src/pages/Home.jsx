@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import MainLayout from '../layouts/MainLayout';
 import ProductCard from '../components/molecules/ProductCard';
-import { ArrowRight, MapPin } from 'lucide-react';
+import { ArrowRight, MapPin, Bot } from 'lucide-react';
 import BrandsMarquee from '../components/molecules/BrandsMarquee';
 import { CATEGORIES } from '../data/categories';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { API_URL } from '../services/api';
-import DealOfTheDay from '../components/molecules/DealOfTheDay';
-import SmartAssistant from '../components/organisms/SmartAssistant';
-import SEO from '../components/atoms/SEO';
-import Loader from '../components/atoms/Loader';
-import InteractiveHero from '../components/organisms/InteractiveHero';
-import BackToTop from '../components/atoms/BackToTop';
-import InteractiveMap from '../components/organisms/InteractiveMap';
 import { useLanguage } from '../context/LanguageContext';
+import Loader from '../components/atoms/Loader';
+import SEO from '../components/atoms/SEO';
+import DealOfTheDay from '../components/molecules/DealOfTheDay';
+import InteractiveHero from '../components/organisms/InteractiveHero';
+import InteractiveMap from '../components/organisms/InteractiveMap';
 
 const Home = () => {
     const [allProducts, setAllProducts] = useState([]);
@@ -54,8 +52,6 @@ const Home = () => {
 
             {/* Hero Section */}
             {!loading && <InteractiveHero products={allProducts} />}
-            {/* Back to top button (présent juste après le hero) */}
-            {!loading && <BackToTop />}
 
             {/* Categories Section */}
             <section id="categories" className="py-24 bg-gray-50 dark:bg-gray-900/50 relative">
@@ -74,12 +70,12 @@ const Home = () => {
                             <Link
                                 key={cat.id}
                                 to={cat.path}
-                                className="group relative h-64 rounded-3xl overflow-hidden bg-white dark:bg-gray-800 shadow-sm hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100 dark:border-white/5"
+                                className="group relative h-64 rounded-3xl overflow-hidden bg-white shadow-sm hover:shadow-2xl transition-all duration-500 transform hover:-translate-y-2 border border-gray-100"
                             >
                                 <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-white dark:from-gray-800 dark:to-gray-900"></div>
                                 <div className="absolute -right-8 -bottom-8 w-32 h-32 bg-secondary/20 rounded-full group-hover:scale-[10] transition-transform duration-700 ease-in-out"></div>
                                 <div className="relative h-full flex flex-col items-center justify-center p-6 text-center z-10">
-                                    <div className="w-16 h-16 rounded-2xl bg-white dark:bg-gray-700 shadow-md flex items-center justify-center mb-4 text-gray-400 dark:text-gray-300 group-hover:text-primary dark:group-hover:text-secondary group-hover:scale-110 transition-all duration-300">
+                                    <div className="w-16 h-16 rounded-2xl bg-white shadow-md flex items-center justify-center mb-4 text-gray-400 group-hover:text-primary group-hover:scale-110 transition-all duration-300">
                                         <cat.icon size={32} />
                                     </div>
                                     <h3 className="text-xl font-bold text-gray-900 dark:text-white group-hover:text-white transition-colors duration-300">{cat.name}</h3>
@@ -102,8 +98,8 @@ const Home = () => {
             <section className="py-24 bg-white dark:bg-gray-900 relative overflow-hidden">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
                     <div className="text-center mb-16 space-y-4">
-                        <span className="text-secondary font-bold tracking-widest uppercase text-sm">Sélection Exclusive</span>
-                        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white uppercase tracking-tighter">Les Pépites du Moment</h2>
+                        <span className="text-secondary font-bold tracking-widest uppercase text-sm">{t('home.featured.label')}</span>
+                        <h2 className="text-4xl md:text-5xl font-extrabold text-gray-900 dark:text-white uppercase tracking-tighter">{t('home.featured.title')}</h2>
                         <div className="w-20 h-1.5 bg-premium-gradient mx-auto rounded-full"></div>
                     </div>
 
@@ -124,7 +120,7 @@ const Home = () => {
                             to="/shop/all"
                             className="inline-flex items-center gap-3 px-8 py-4 bg-gray-900 dark:bg-gray-800 text-white rounded-full font-bold hover:bg-premium-gradient transition-all shadow-lg hover:shadow-xl hover:-translate-y-1"
                         >
-                            Voir tous les produits <ArrowRight size={20} />
+                            {t('home.featured.view_all')} <ArrowRight size={20} />
                         </Link>
                     </div>
                 </div>
@@ -174,12 +170,14 @@ const Home = () => {
                                 </div>
                             </div>
 
-                            <Link
-                                to="/contact"
-                                className="inline-flex items-center gap-3 px-8 py-4 bg-white text-gray-900 rounded-full font-bold hover:bg-secondary transition-all shadow-xl group"
-                            >
-                                Contactez-nous <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
-                            </Link>
+                            <div className="w-full flex justify-center lg:justify-start">
+                                <Link
+                                    to="/contact"
+                                    className="inline-flex items-center gap-3 px-8 py-4 bg-white text-gray-900 rounded-full font-bold hover:bg-secondary transition-all shadow-xl group mx-auto"
+                                >
+                                    Contactez-nous <ArrowRight size={20} className="group-hover:translate-x-1 transition-transform" />
+                                </Link>
+                            </div>
                         </div>
 
                         <div className="lg:col-span-7">
@@ -193,7 +191,6 @@ const Home = () => {
                 </div>
             </section>
 
-            <SmartAssistant />
         </MainLayout>
     );
 };

@@ -43,11 +43,11 @@ const InteractiveHero = ({ products }) => {
             <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-[#FFCB50]/5 rounded-full blur-[120px] -mr-96 -mt-96"></div>
             <div className="absolute bottom-0 left-0 w-[600px] h-[600px] bg-[#544F7D]/10 rounded-full blur-[100px] -ml-48 -mb-48"></div>
 
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 py-12 lg:py-0">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full relative z-10 pt-20 lg:pt-0">
                 <div className="grid lg:grid-cols-12 gap-12 items-center">
 
                     {/* LEFT: Product Info (40%) */}
-                    <div className={`lg:col-span-4 space-y-6 transition-all duration-500 ${isTransitioning ? 'opacity-0 -translate-x-10' : 'opacity-100 translate-x-0'}`}>
+                    <div className={`lg:col-span-4 space-y-6 transition-all duration-500 ${isTransitioning ? 'opacity-0 -translate-x-10' : 'opacity-100 translate-x-0' } mx-auto text-center lg:text-left max-w-md lg:max-w-none`}>
                         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-xl text-secondary text-[10px] font-black uppercase tracking-[0.2em]">
                             <Sparkles size={14} className="animate-pulse" />
                             {t('hero.featured_product') || 'Selection Premium'}
@@ -62,11 +62,11 @@ const InteractiveHero = ({ products }) => {
                             </p>
                         </div>
 
-                        <div className="flex items-end gap-3">
+                        <div className="flex items-end gap-3 justify-center lg:justify-start">
                             <span className="text-4xl font-black text-white">{currentProduct.price} DH</span>
                         </div>
 
-                        <div className="flex flex-wrap gap-4 pt-4">
+                        <div className="flex flex-wrap gap-4 pt-4 justify-center lg:justify-start">
                             <Link
                                 to={`/product/${currentProduct.id}`}
                                 className="inline-flex items-center gap-3 px-8 py-4 bg-premium-gradient text-white rounded-2xl font-black transition-all shadow-2xl shadow-primary/40 group"

@@ -4,6 +4,8 @@ import AdminLayout from '../layouts/AdminLayout';
 import axios from 'axios';
 import { API_URL } from '../services/api';
 import { ShoppingBag, Search, Eye, X, User, MapPin, Phone, Mail, Package, CreditCard, ChevronRight, CheckCircle2, Download, ExternalLink, MessageSquare, Send, Banknote, History, FileText, DownloadCloud, Store } from 'lucide-react';
+import getImageUrl from '../services/image';
+import { exportOrdersToExcel } from '../utils/excelExport';
 import Loader from '../components/atoms/Loader';
 import { useAuth } from '../context/AuthContext';
 import { toast } from 'react-hot-toast';
@@ -14,6 +16,7 @@ const AdminOrders = () => {
     const [selectedOrder, setSelectedOrder] = useState(null);
     const [searchTerm, setSearchTerm] = useState('');
     const { token } = useAuth();
+    const [isExporting, setIsExporting] = useState(false);
 
     useEffect(() => {
         fetchOrders();
@@ -71,9 +74,11 @@ const AdminOrders = () => {
 
     const handleDownloadInvoice = async (orderId) => {
         try {
-            const token = localStorage.getItem('token');
+            // Prefer the order's secure token for public invoice access; fallback to auth token
+            const order = orders.find(o => o.id === orderId);
+            const tokenParam = order?.secure_token || localStorage.getItem('token');
             // Open invoice in new tab using public route
-            const invoiceUrl = `${API_URL}/invoice/${orderId}?token=${token}`;
+            const invoiceUrl = `${API_URL}/invoice/${orderId}?token=${tokenParam}`;
             window.open(invoiceUrl, '_blank');
             toast.success("Facture ouverte dans un nouvel onglet");
         } catch (error) {
@@ -127,8 +132,23 @@ const AdminOrders = () => {
                         <p className="text-gray-500 font-medium">Gérez vos expéditions et les statuts des clients.</p>
                     </div>
                     <div className="flex items-center gap-4">
-                        <button className="flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-bold text-gray-600 hover:bg-gray-50 transition-all shadow-sm">
-                            <Download size={18} /> Export CSV
+                        <button
+                            onClick={async () => {
+                                try {
+                                    setIsExporting(true);
+                                    await exportOrdersToExcel(filteredOrders.length > 0 ? filteredOrders : orders);
+                                    toast.success('Fichier Excel généré avec succès');
+                                } catch (error) {
+                                    console.error('Export error', error);
+                                    toast.error('Erreur lors de la génération Excel');
+                                } finally {
+                                    setIsExporting(false);
+                                }
+                            }}
+                            disabled={isExporting}
+                            className={`flex items-center gap-2 px-4 py-2 bg-white border border-gray-200 rounded-xl text-sm font-bold text-gray-600 hover:bg-gray-50 transition-all shadow-sm ${isExporting ? 'opacity-60 cursor-wait' : ''}`}
+                        >
+                            {isExporting ? <Loader /> : <Download size={18} />} Exporter XLSX
                         </button>
                         <div className="bg-white p-1 rounded-2xl border border-gray-100 shadow-sm flex">
                             <div className="px-6 py-2 text-center">
@@ -151,7 +171,7 @@ const AdminOrders = () => {
                             <input
                                 type="text"
                                 placeholder="Rechercher par ID ou nom client..."
-                                className="w-full pl-16 pr-6 py-4 bg-white border-transparent focus:border-primary focus:ring-4 focus:ring-primary/10 border-2 rounded-2xl outline-none transition-all font-bold shadow-sm"
+                                className="w-full pl-16 pr-6 py-4 bg-white border-transparent focus:border-primary focus:ring-4 focus:ring-primary/10 border-2 rounded-2xl outline-none transition-all font-bold shadow-sm text-black dark:text-black"
                                 value={searchTerm}
                                 onChange={(e) => setSearchTerm(e.target.value)}
                             />
@@ -377,7 +397,12 @@ const AdminOrders = () => {
                                             {selectedOrder.items?.filter(item => item.sub_order_id === sub.id).map((item, iidx) => (
                                                 <div key={iidx} className="flex items-center gap-4">
                                                     <div className="w-12 h-12 bg-gray-50 rounded-2xl p-1 flex-shrink-0">
-                                                        <img src={item.product?.image} alt="" className="w-full h-full object-contain mix-blend-multiply" />
+                                                        <img
+                                                            src={getImageUrl(item.product?.image) || '/img/placeholder.png'}
+                                                            alt={item.product?.name || 'Produit'}
+                                                            onError={(e) => { e.currentTarget.onerror = null; e.currentTarget.src = '/img/placeholder.png'; }}
+                                                            className="w-full h-full object-contain mix-blend-multiply"
+                                                        />
                                                     </div>
                                                     <div className="flex-1">
                                                         <p className="font-bold text-gray-900 text-xs line-clamp-1">{item.product?.name}</p>

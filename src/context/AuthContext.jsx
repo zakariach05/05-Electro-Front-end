@@ -31,21 +31,31 @@ export const AuthProvider = ({ children }) => {
     };
 
     const login = async (email, password) => {
-        const response = await axios.post(`${API_URL}/login`, { email, password });
-        const { access_token, user } = response.data;
-        localStorage.setItem('token', access_token);
-        setToken(access_token);
-        setUser(user);
-        return response.data;
+        try {
+            const response = await axios.post(`${API_URL}/login`, { email, password });
+            const { access_token, user } = response.data;
+            localStorage.setItem('token', access_token);
+            setToken(access_token);
+            setUser(user);
+            return response.data;
+        } catch (err) {
+            console.error('Login failed:', err.response?.status, err.response?.data || err.message);
+            throw err;
+        }
     };
 
     const register = async (userData) => {
-        const response = await axios.post(`${API_URL}/register`, userData);
-        const { access_token, user } = response.data;
-        localStorage.setItem('token', access_token);
-        setToken(access_token);
-        setUser(user);
-        return response.data;
+        try {
+            const response = await axios.post(`${API_URL}/register`, userData);
+            const { access_token, user } = response.data;
+            localStorage.setItem('token', access_token);
+            setToken(access_token);
+            setUser(user);
+            return response.data;
+        } catch (err) {
+            console.error('Register failed:', err.response?.status, err.response?.data || err.message);
+            throw err;
+        }
     };
 
     const logout = async () => {
@@ -64,7 +74,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, loading, login, register, logout, isAdmin: user?.role === 'admin' }}>
+        <AuthContext.Provider value={{ user, loading, token, login, register, logout, isAdmin: user?.role === 'admin' }}>
             {children}
         </AuthContext.Provider>
     );

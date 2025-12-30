@@ -5,11 +5,11 @@
     },
     {
         "name": "Samsung",
-        "logo": "https://upload.wikimedia.org/wikipedia/commons/2/24/Samsung_Logo.svg"
+        "logo": "icons8-samsung.svg"
     },
     {
         "name": "Sony",
-        "logo": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Sony_logo_text_only.svg"
+        "logo": "sony.png"
     },
     {
         "name": "Xiaomi",
@@ -29,7 +29,7 @@
     },
     {
         "name": "LG",
-        "logo": "https://upload.wikimedia.org/wikipedia/commons/b/bf/LG_logo_%282015%29.svg"
+        "logo": "lg.png"
     },
     {
         "name": "Lenovo",
@@ -37,7 +37,7 @@
     },
     {
         "name": "MSI",
-        "logo": "https://upload.wikimedia.org/wikipedia/commons/e/ea/MSI_Laptop_Logo_2022.png"
+        "logo": "icons8-msi.svg"
     },
     {
         "name": "PlayStation",

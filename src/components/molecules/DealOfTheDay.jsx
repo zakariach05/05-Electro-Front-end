@@ -32,10 +32,10 @@ const DealOfTheDay = () => {
             <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/20 rounded-full blur-[120px] pointer-events-none"></div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-                <div className="flex flex-col lg:flex-row items-center justify-between gap-12">
+                <div className="flex flex-col lg:flex-row items-center gap-12">
 
-                    {/* Text & Timer */}
-                    <div className="lg:w-1/2 space-y-8">
+                    {/* Text & Timer (centered on mobile, left on desktop) */}
+                    <div className="w-full lg:w-1/2 max-w-2xl space-y-8 text-center lg:text-left mx-auto lg:mx-0">
                         <div className="inline-flex items-center gap-2 bg-red-500/20 border border-red-500/30 text-red-500 px-4 py-1.5 rounded-full text-sm font-bold uppercase tracking-wider animate-pulse">
                             <Zap size={16} className="fill-current" /> Offre Flash Limitée
                         </div>
@@ -52,7 +52,7 @@ const DealOfTheDay = () => {
                         </p>
 
                         {/* Countdown */}
-                        <div className="flex gap-4">
+                        <div className="flex gap-4 justify-center lg:justify-start">
                             {['Heures', 'Minutes', 'Secondes'].map((label, idx) => {
                                 const value = idx === 0 ? timeLeft.hours : idx === 1 ? timeLeft.minutes : timeLeft.seconds;
                                 return (
@@ -66,15 +66,15 @@ const DealOfTheDay = () => {
                             })}
                         </div>
 
-                        <div className="pt-4">
+                        <div className="pt-4 flex justify-center lg:justify-start">
                             <button className="btn-magnetic px-10 py-4 bg-white text-gray-900 rounded-full font-bold hover:bg-gray-100 shadow-[0_0_20px_rgba(255,255,255,0.2)] transition-all transform hover:-translate-y-1">
                                 Acheter Maintenant - 8990 DH
                             </button>
                         </div>
                     </div>
 
-                    {/* Image Composition */}
-                    <div className="lg:w-1/2 relative">
+                    {/* Image Composition (right on desktop, centered below on narrow screens) */}
+                    <div className="relative w-full lg:w-1/2 flex justify-center">
                         <div className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent z-10"></div>
                         {/* Circle Background */}
                         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-gray-800 rounded-full border border-gray-700"></div>

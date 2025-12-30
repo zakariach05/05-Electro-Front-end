@@ -61,10 +61,32 @@ const FilterSidebar = ({ filters, setFilters, closeMobileFilters }) => {
                 </div>
             </FilterSection>
 
+            {/* Catégories (Visible only if no category selected in URL or 'all') */}
+            <FilterSection title="Catégories">
+                <div className="space-y-2">
+                    {['Smartphones', 'PC & Mac', 'Gaming', 'TV & Son', 'Tablettes', 'Accessoires', 'Domotique'].map(cat => (
+                        <label key={cat} className="flex items-center gap-3 cursor-pointer group">
+                            <div className="relative flex items-center">
+                                <input
+                                    type="checkbox" // Changed to checkbox to allow multiple or just toggle
+                                    className="peer appearance-none w-5 h-5 border border-gray-300 rounded-md checked:bg-primary checked:border-primary transition-colors"
+                                    checked={filters.categories?.includes(cat) || false}
+                                    onChange={() => handleCheckboxChange('categories', cat)}
+                                />
+                                <svg className="absolute w-3.5 h-3.5 text-white left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-0 peer-checked:opacity-100 transition-opacity" viewBox="0 0 12 10" fill="none">
+                                    <path d="M1 5L4.5 9L11 1" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                                </svg>
+                            </div>
+                            <span className="text-gray-600 group-hover:text-gray-900 transition-colors">{cat}</span>
+                        </label>
+                    ))}
+                </div>
+            </FilterSection>
+
             {/* Marques */}
             <FilterSection title="Marque">
-                <div className="space-y-2">
-                    {['Apple', 'Samsung', 'Xiaomi', 'Sony', 'HP', 'Dell'].map(brand => (
+                <div className="space-y-2 max-h-60 overflow-y-auto pr-2 custom-scrollbar">
+                    {['Apple', 'Samsung', 'Xiaomi', 'Sony', 'HP', 'Dell', 'Asus', 'Lenovo', 'MSI', 'LG', 'JBL', 'Nintendo', 'Microsoft'].map(brand => (
                         <label key={brand} className="flex items-center gap-3 cursor-pointer group">
                             <div className="relative flex items-center">
                                 <input
@@ -139,7 +161,6 @@ const FilterSidebar = ({ filters, setFilters, closeMobileFilters }) => {
                     </label>
                 </div>
             </FilterSection>
-
             {/* RAM (Mock for now) */}
             <FilterSection title="Mémoire RAM" isOpenDefault={false}>
                 <div className="space-y-2">
@@ -163,7 +184,7 @@ const FilterSidebar = ({ filters, setFilters, closeMobileFilters }) => {
             >
                 Réinitialiser tout
             </button>
-        </div>
+        </div >
     );
 };
 
