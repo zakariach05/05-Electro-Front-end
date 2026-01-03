@@ -164,86 +164,129 @@ const AdminOrders = () => {
                     </div>
                 </div>
 
-                <div className="bg-white rounded-[40px] shadow-sm border border-gray-100 overflow-hidden">
-                    <div className="p-8 border-b border-gray-50 bg-gray-50/30">
-                        <div className="relative max-w-xl">
-                            <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                            <input
-                                type="text"
-                                placeholder="Rechercher par ID ou nom client..."
-                                className="w-full pl-16 pr-6 py-4 bg-white border-transparent focus:border-primary focus:ring-4 focus:ring-primary/10 border-2 rounded-2xl outline-none transition-all font-bold shadow-sm text-black dark:text-black"
-                                value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
-                            />
-                        </div>
-                    </div>
+                {/* Split Orders Logic */}
+                {(() => {
+                    const today = new Date().toDateString();
+                    const todayOrders = filteredOrders.filter(o => new Date(o.created_at).toDateString() === today);
+                    const olderOrders = filteredOrders.filter(o => new Date(o.created_at).toDateString() !== today);
 
-                    <div className="overflow-x-auto">
-                        <table className="w-full text-left">
-                            <thead className="bg-white">
-                                <tr>
-                                    <th className="px-8 py-5 text-xs font-black text-gray-400 uppercase tracking-widest">Commande</th>
-                                    <th className="px-8 py-5 text-xs font-black text-gray-400 uppercase tracking-widest">Client</th>
-                                    <th className="px-8 py-5 text-xs font-black text-gray-400 uppercase tracking-widest">Montant</th>
-                                    <th className="px-8 py-5 text-xs font-black text-gray-400 uppercase tracking-widest">Statut</th>
-                                    <th className="px-8 py-5 text-xs font-black text-gray-400 uppercase tracking-widest">Date</th>
-                                    <th className="px-8 py-5 text-xs font-black text-gray-400 uppercase tracking-widest text-right">Détails</th>
-                                </tr>
-                            </thead>
-                            <tbody className="divide-y divide-gray-50">
-                                {loading ? (
-                                    <tr><td colSpan="6" className="py-20 text-center"><Loader /></td></tr>
-                                ) : filteredOrders.map(order => (
-                                    <tr key={order.id} className="hover:bg-gray-50/50 transition-colors group">
-                                        <td className="px-8 py-6">
-                                            <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 rounded-xl bg-gray-900 text-white flex items-center justify-center font-black text-xs">
-                                                    #{order.id}
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td className="px-8 py-6">
-                                            <div className="flex flex-col">
-                                                <span className="font-bold text-gray-900">{order.customer_name}</span>
-                                                <span className="text-xs text-gray-400 flex items-center gap-1">
-                                                    <MapPin size={10} /> {order.customer_city}
-                                                </span>
-                                            </div>
-                                        </td>
-                                        <td className="px-8 py-6">
-                                            <span className="font-black text-gray-900">{order.total_amount?.toLocaleString()} DH</span>
-                                        </td>
-                                        <td className="px-8 py-6">
-                                            <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase border ${getStatusStyles(order.status)}`}>
-                                                {order.status === 'pending' ? 'En attente' :
-                                                    order.status === 'processing' ? 'En cours' :
-                                                        order.status === 'completed' ? 'Livré' : 'Annulé'}
-                                            </span>
-                                        </td>
-                                        <td className="px-8 py-6 text-sm text-gray-500 font-medium">
-                                            {new Date(order.created_at).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' })}
-                                        </td>
-                                        <td className="px-8 py-6 text-right flex items-center justify-end gap-2">
-                                            <button
-                                                onClick={() => handleDownloadInvoice(order.id)}
-                                                className="p-3 bg-gray-50 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-2xl transition-all"
-                                                title="Télécharger Facture"
-                                            >
-                                                <FileText size={20} />
-                                            </button>
-                                            <button
-                                                onClick={() => setSelectedOrder(order)}
-                                                className="p-3 bg-gray-50 text-gray-400 hover:text-primary hover:bg-primary/5 rounded-2xl transition-all group-hover:scale-110"
-                                            >
-                                                <Eye size={20} />
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                    const OrderTable = ({ data, title, icon: Icon, emptyMsg }) => (
+                        <div className="bg-white rounded-[40px] shadow-sm border border-gray-100 overflow-hidden mb-8">
+                            <div className="p-8 border-b border-gray-50 bg-gray-50/30 flex items-center justify-between">
+                                <h2 className="text-xl font-black text-gray-900 flex items-center gap-3">
+                                    {Icon && <Icon className="text-primary" size={24} />}
+                                    {title}
+                                    <span className="bg-gray-100 text-gray-600 px-3 py-1 rounded-full text-xs transition-all hover:bg-primary hover:text-white">
+                                        {data.length}
+                                    </span>
+                                </h2>
+                                {title === 'Commandes du Jour' && (
+                                    <div className="relative max-w-sm">
+                                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={16} />
+                                        <input
+                                            type="text"
+                                            placeholder="Filtrer..."
+                                            className="w-full pl-10 pr-4 py-2 bg-white border border-gray-200 rounded-xl outline-none focus:border-primary focus:ring-2 focus:ring-primary/10 text-sm font-bold shadow-sm"
+                                            value={searchTerm}
+                                            onChange={(e) => setSearchTerm(e.target.value)}
+                                        />
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="overflow-x-auto">
+                                <table className="w-full text-left">
+                                    <thead className="bg-white">
+                                        <tr>
+                                            <th className="px-8 py-5 text-xs font-black text-gray-400 uppercase tracking-widest">Commande</th>
+                                            <th className="px-8 py-5 text-xs font-black text-gray-400 uppercase tracking-widest">Client</th>
+                                            <th className="px-8 py-5 text-xs font-black text-gray-400 uppercase tracking-widest">Montant</th>
+                                            <th className="px-8 py-5 text-xs font-black text-gray-400 uppercase tracking-widest">Statut</th>
+                                            <th className="px-8 py-5 text-xs font-black text-gray-400 uppercase tracking-widest">Date</th>
+                                            <th className="px-8 py-5 text-xs font-black text-gray-400 uppercase tracking-widest text-right">Détails</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody className="divide-y divide-gray-50">
+                                        {loading ? (
+                                            <tr><td colSpan="6" className="py-20 text-center"><Loader /></td></tr>
+                                        ) : data.length > 0 ? (
+                                            data.map(order => (
+                                                <tr key={order.id} className="hover:bg-gray-50/50 transition-colors group">
+                                                    <td className="px-8 py-6">
+                                                        <div className="flex items-center gap-3">
+                                                            <div className="w-10 h-10 rounded-xl bg-gray-900 text-white flex items-center justify-center font-black text-xs">
+                                                                #{order.id}
+                                                            </div>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-8 py-6">
+                                                        <div className="flex flex-col">
+                                                            <span className="font-bold text-gray-900">{order.customer_name}</span>
+                                                            <span className="text-xs text-gray-400 flex items-center gap-1">
+                                                                <MapPin size={10} /> {order.customer_city}
+                                                            </span>
+                                                        </div>
+                                                    </td>
+                                                    <td className="px-8 py-6">
+                                                        <span className="font-black text-gray-900">{order.total_amount?.toLocaleString()} DH</span>
+                                                    </td>
+                                                    <td className="px-8 py-6">
+                                                        <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase border ${getStatusStyles(order.status)}`}>
+                                                            {order.status === 'pending' ? 'En attente' :
+                                                                order.status === 'processing' ? 'En cours' :
+                                                                    order.status === 'completed' ? 'Livré' : 'Annulé'}
+                                                        </span>
+                                                    </td>
+                                                    <td className="px-8 py-6 text-sm text-gray-500 font-medium">
+                                                        {new Date(order.created_at).toLocaleDateString('fr-FR', { day: '2-digit', month: 'short', year: 'numeric' })}
+                                                    </td>
+                                                    <td className="px-8 py-6 text-right flex items-center justify-end gap-2">
+                                                        <button
+                                                            onClick={() => handleDownloadInvoice(order.id)}
+                                                            className="p-3 bg-gray-50 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-2xl transition-all"
+                                                            title="Télécharger Facture"
+                                                        >
+                                                            <FileText size={20} />
+                                                        </button>
+                                                        <button
+                                                            onClick={() => setSelectedOrder(order)}
+                                                            className="p-3 bg-gray-50 text-gray-400 hover:text-primary hover:bg-primary/5 rounded-2xl transition-all group-hover:scale-110"
+                                                        >
+                                                            <Eye size={20} />
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            ))
+                                        ) : (
+                                            <tr>
+                                                <td colSpan="6" className="py-10 text-center text-gray-400 font-medium italic">
+                                                    {emptyMsg}
+                                                </td>
+                                            </tr>
+                                        )}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    );
+
+                    return (
+                        <>
+                            <OrderTable
+                                data={todayOrders}
+                                title="Commandes du Jour"
+                                icon={Package}
+                                emptyMsg="Aucune commande passée aujourd'hui."
+                            />
+                            <OrderTable
+                                data={olderOrders}
+                                title="Historique des Commandes"
+                                icon={History}
+                                emptyMsg="Aucune commande dans l'historique."
+                            />
+                        </>
+                    );
+                })()}
             </div>
 
             {/* Detailed Side Panel */}
